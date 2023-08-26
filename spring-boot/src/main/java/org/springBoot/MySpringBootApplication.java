@@ -1,6 +1,7 @@
 package org.springBoot;
 
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
@@ -9,6 +10,7 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @ComponentScan
+@Import(WebServerAutoConfiguration.class)
 public @interface MySpringBootApplication {
 
 }

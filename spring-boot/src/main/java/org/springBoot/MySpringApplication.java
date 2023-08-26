@@ -14,6 +14,8 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import java.util.Map;
+
 public class MySpringApplication {
     public static void run(Class clazz) {
         // create spring context
@@ -22,8 +24,20 @@ public class MySpringApplication {
         applicationContext.register(clazz);
         applicationContext.refresh();
         // start tomcat
-        startTomcat(applicationContext);
+        WebServer webServer = getWebServer(applicationContext);
+        webServer.start();
 
+    }
+
+    private static WebServer getWebServer(WebApplicationContext applicationContext) {
+        Map<String, WebServer> beansOfType = applicationContext.getBeansOfType(WebServer.class);
+        if(beansOfType.size() == 0) {
+            throw new NullPointerException();
+        }
+        if (beansOfType.size() > 1) {
+            throw new IllegalStateException();
+        }
+        return beansOfType.values().stream().findFirst().get();
     }
 
     /**
