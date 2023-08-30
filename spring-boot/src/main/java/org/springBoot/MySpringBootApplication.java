@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @ComponentScan
-@Import(WebServerAutoConfiguration.class)
+@Import(AutoConfigurationImportSelector.class)
 public @interface MySpringBootApplication {
 
 }
